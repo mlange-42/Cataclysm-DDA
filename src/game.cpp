@@ -11617,6 +11617,11 @@ point game::update_map( int &x, int &y, bool z_level_changed )
 
 void game::update_overmap_seen()
 {
+    for( const tripoint_abs_omt &p : u.last_seen ) {
+        overmap_buffer.set_seen( p, false );
+        u.last_seen.clear();
+    }
+
     const tripoint_abs_omt ompos = u.global_omt_location();
     const int dist = u.overmap_sight_range( light_level( u.posz() ) );
     const int dist_squared = dist * dist;
@@ -11648,6 +11653,7 @@ void game::update_overmap_seen()
             tripoint_abs_omt seen( p );
             do {
                 overmap_buffer.set_seen( seen, true );
+                u.last_seen.emplace_back( seen );
                 --seen.z();
             } while( seen.z() >= 0 );
         }

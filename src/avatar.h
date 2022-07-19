@@ -362,6 +362,7 @@ class avatar : public Character
         vproto_id starting_vehicle;
         std::vector<mtype_id> starting_pets;
         std::set<character_id> follower_ids;
+        std::vector<tripoint_abs_omt> last_seen;
 
         bool aim_cache_dirty = true;
 
